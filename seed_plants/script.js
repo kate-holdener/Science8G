@@ -41,78 +41,77 @@ const termsAndDefinitions = {
     "Genetic Engineering": "A method where scientists alter an organism’s genetic material to produce desired traits."
 };
 
-// Shuffling the terms and definitions
+// Shuffle the terms and definitions
 let shuffledTerms = Object.keys(termsAndDefinitions).sort(() => 0.5 - Math.random());
 let shuffledDefinitions = Object.values(termsAndDefinitions).sort(() => 0.5 - Math.random());
 
-// Generate the quiz layout
+// Set pagination variables
+const termsPerPage = 10;
+let currentPage = 1;
+let totalPages = Math.ceil(shuffledTerms.length / termsPerPage);
+
+// Function to update the quiz content for the current page
 function generateQuiz() {
     const termsContainer = document.getElementById('terms');
     const definitionsContainer = document.getElementById('definitions');
+    const pageIndicator = document.getElementById('pageIndicator');
+    const nextButton = document.getElementById('nextPage');
+    const prevButton = document.getElementById('previousPage');
 
-    shuffledTerms.forEach(term => {
+    // Update page indicator
+    pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+
+    // Disable/Enable buttons based on page number
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+
+    // Clear previous content
+    termsContainer.innerHTML = '';
+    definitionsContainer.innerHTML = '';
+
+    // Get the terms and definitions for the current page
+    const startIndex = (currentPage - 1) * termsPerPage;
+    const termsOnPage = shuffledTerms.slice(startIndex, startIndex + termsPerPage);
+    const definitionsOnPage = shuffledDefinitions.slice(startIndex, startIndex + termsPerPage);
+
+    // Generate terms and definitions for the current page
+    termsOnPage.forEach(term => {
         const termElement = document.createElement('div');
         termElement.classList.add('term');
         termElement.setAttribute('draggable', true);
         termElement.setAttribute('data-term', term);
         termElement.textContent = term;
-
         termElement.addEventListener('dragstart', dragStart);
         termElement.addEventListener('dragend', dragEnd);
-
         termsContainer.appendChild(termElement);
     });
 
-    shuffledDefinitions.forEach(definition => {
+    definitionsOnPage.forEach(definition => {
         const definitionElement = document.createElement('div');
         definitionElement.classList.add('definition');
         definitionElement.setAttribute('draggable', true);
         definitionElement.setAttribute('data-definition', definition);
         definitionElement.textContent = definition;
-
         definitionElement.addEventListener('dragstart', dragStart);
         definitionElement.addEventListener('dragend', dragEnd);
-
         definitionsContainer.appendChild(definitionElement);
     });
 }
 
-// Drag events
-let draggedItem = null;
-
-function dragStart(e) {
-    draggedItem = e.target;
-    setTimeout(() => {
-        e.target.style.display = 'none';
-    }, 0);
-}
-
-function dragEnd(e) {
-    e.target.style.display = 'block';
-    draggedItem = null;
-}
-
-// Dropping terms and definitions
-const definitions = document.querySelectorAll('.definition');
-
-definitions.forEach(definition => {
-    definition.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-
-    definition.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const droppedTerm = draggedItem.textContent;
-        const droppedDefinition = definition.textContent;
-
-        if (termsAndDefinitions[droppedTerm] === droppedDefinition) {
-            draggedItem.classList.add('dropped');
-            definition.classList.add('dropped');
-        }
-    });
+// Handle page navigation
+document.getElementById('nextPage').addEventListener('click', () => {
+    if (currentPage < totalPages) {
+        currentPage++;
+        generateQuiz();
+    }
 });
 
-// Check the answers
-document.getElementById('checkAnswers').addEventListener('click', function () {
-    const resultContainer = document.getElementById('result');
-   
+document.getElementById('previousPage').addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        generateQuiz();
+    }
+});
+
+// Initialize the quiz
+generateQuiz();

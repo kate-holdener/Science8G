@@ -18,6 +18,8 @@ p {
     justify-content: space-around;
     padding: 20px;
     margin-top: 20px;
+    overflow-y: auto;
+    max-height: 400px;  /* Restrict height to prevent scrolling over the whole quiz */
 }
 
 .terms, .definitions {
@@ -64,6 +66,13 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #result {
