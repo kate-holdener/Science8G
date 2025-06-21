@@ -1,30 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Science Matching Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Matching Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 1em;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    .quiz-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 2em 0;
+    }
+    .terms, .definitions {
+      width: 45%;
+    }
+    .item {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: grab;
+    }
+    .dropzone {
+      min-height: 40px;
+      border: 2px dashed #ccc;
+      margin-top: 0.5em;
+      padding: 0.5em;
+    }
+    .connected {
+      background: #e0ffe0;
+    }
+    .incorrect {
+      background: #ffe0e0;
+    }
+    .correct {
+      background: #d0ffd0;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 2em;
+    }
+    button {
+      padding: 0.75em 2em;
+      font-size: 1em;
+    }
+  </style>
 </head>
 <body>
-    <h1>Plant Science Matching Quiz</h1>
-    <p>Drag and drop the terms to their correct definitions below.</p>
-    <div class="quiz-container">
-        <div class="terms" id="terms">
-            <!-- Terms will be dynamically inserted here -->
-        </div>
-        <div class="definitions" id="definitions">
-            <!-- Definitions will be dynamically inserted here -->
-        </div>
-    </div>
-    <div class="pagination">
-        <button id="previousPage" disabled>Previous</button>
-        <span id="pageIndicator">Page 1 of X</span>
-        <button id="nextPage">Next</button>
-    </div>
-    <button id="checkAnswers">Check Answers</button>
-    <div id="result"></div>
+  <h1>Plant Terms Matching Quiz - Page 1</h1>
+  <div class="quiz-container">
+    <div class="terms" id="terms"></div>
+    <div class="definitions" id="definitions"></div>
+  </div>
+  <div class="controls">
+    <button onclick="checkAnswers()">Check Answers</button>
+    <button onclick="nextPage()">Next Page</button>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    const allData = [
+      { term: "Phloem", def: "The vascular tissue through which food moves." },
+      { term: "Xylem", def: "Vascular tissue through which water and minerals move." },
+      { term: "Pollen", def: "Tiny structures that contain the cells that will later become sperm cells." },
+      { term: "Seed", def: "A structure that contains a young plant inside a protective covering." },
+      { term: "Embryo", def: "The young plant that develops from the zygote, or fertilized egg." },
+      { term: "Cotyledons", def: "The part of the seed where food is stored." },
+      { term: "Germination", def: "The process when the embryo grows and pushes out of the seed." },
+      { term: "Root Cap", def: "Protects the root from injury as the root grows through the soil." },
+      { term: "Cambium", def: "A layer of cells which divide to produce new phloem and xylem." },
+      { term: "Stomata", def: "The small openings or pores on the surface of a leaf." },
+      { term: "Transpiration", def: "The process in which water evaporates from a plant’s leaves." },
+      { term: "Gymnosperm", def: "A seed plant that produces naked seeds." },
+      { term: "Cone", def: "The reproductive structure of gymnosperms." },
+      { term: "Ovule", def: "A structure that contains an egg cell." },
+      { term: "Pollination", def: "The transfer of pollen from the male reproductive structure to the female reproductive structure." },
+      { term: "Angiosperm", def: "A flowering plant that produces seeds enclosed in a structure." },
+      { term: "Flower", def: "The reproductive structure of an angiosperm." },
+      { term: "Sepals", def: "Protect the developing flower." },
+      { term: "Petal", def: "The part of a flower that attracts pollinators." },
+      { term: "Stamen", def: "The male reproductive part of a flower." },
+      { term: "Pistil", def: "The female reproductive part of a flower." },
+      { term: "Ovary", def: "A hollow structure that protects the seeds as they develop." },
+      { term: "Fruit", def: "A ripened ovary and other structures that enclose one or more seeds." },
+      { term: "Monocots", def: "Angiosperms with only one seed leaf." },
+      { term: "Dicots", def: "Angiosperms with two seed leaves." },
+      { term: "Tropism", def: "A plant's growth response toward or away from a stimulus." },
+      { term: "Hormone", def: "A chemical that affects how a plant grows and develops." },
+      { term: "Auxin", def: "A plant hormone that speeds up the rate at which a plant’s cells grow." },
+      { term: "Photoperiodism", def: "A plant's response to seasonal changes in the length of night and day." },
+      { term: "Short-Day Plants", def: "Plants that flower when nights are longer than a critical length." },
+      { term: "Long-Day Plants", def: "Plants that flower when nights are shorter than a critical length." },
+      { term: "Critical Night Length", def: "The number of hours of darkness that determines whether or not a plant will flower." },
+      { term: "Day-Neutral Plants", def: "Plants whose flowering cycle is not sensitive to periods of light or dark." },
+      { term: "Dormancy", def: "A period when an organism's growth or activity stops." },
+      { term: "Annuals", def: "Flowering plants that complete a life cycle within one growing season." },
+      { term: "Biennials", def: "Angiosperms that complete their life cycle in two years." },
+      { term: "Perennials", def: "Flowering plants that live for more than two years." },
+      { term: "Precision Farming", def: "A farming method in which farmers fine-tune the amount of water and fertilizer to match a specific field's requirements." },
+      { term: "Hydroponics", def: "A method of growing plants in solutions of nutrients instead of soil." },
+      { term: "Genetic Engineering", def: "A method where scientists alter an organism’s genetic material to produce desired traits." }
+    ];
+
+    const pageSize = 5;
+    let currentPage = 0;
+
+    function renderPage() {
+      const start = currentPage * pageSize;
+      const pageData = allData.slice(start, start + pageSize);
+
+      const terms = document.getElementById("terms");
+      const definitions = document.getElementById("definitions");
+
+      terms.innerHTML = "";
+      definitions.innerHTML = "";
+
+      pageData.forEach((item) => {
+        const termDiv = document.createElement("div");
+        termDiv.className = "item";
+        termDiv.innerHTML = `<strong>${item.term}</strong><div class="dropzone" data-term="${item.term}"></div>`;
+        terms.appendChild(termDiv);
+      });
+
+      const shuffled = [...pageData].sort(() => Math.random() - 0.5);
+      shuffled.forEach((item) => {
+        const defDiv = createDefDiv(item.def);
+        definitions.appendChild(defDiv);
+      });
+
+      setupDropzones();
+    }
+
+    function createDefDiv(defText) {
+      const defDiv = document.createElement("div");
+      defDiv.className = "item definition-item";
+      defDiv.draggable = true;
+      defDiv.textContent = defText;
+      defDiv.dataset.def = defText;
+      defDiv.ondragstart = (e) => {
+        e.dataTransfer.setData("text/plain", defText);
+
+        const parent = defDiv.parentElement;
+        if (parent.classList.contains("dropzone")) {
+          delete parent.dataset.dropped;
+          parent.classList.remove("connected", "correct", "incorrect");
+          parent.textContent = "";
+        }
+      };
+      return defDiv;
+    }
+
+    function setupDropzones() {
+      document.querySelectorAll(".dropzone").forEach((dz) => {
+        dz.ondragover = (e) => e.preventDefault();
+        dz.ondrop = (e) => {
+          e.preventDefault();
+          const def = e.dataTransfer.getData("text/plain");
+
+          if (dz.dataset.dropped) {
+            const oldDef = dz.dataset.dropped;
+            document.getElementById("definitions").appendChild(createDefDiv(oldDef));
+          }
+
+          const defElems = document.querySelectorAll(".definition-item");
+          defElems.forEach(el => {
+            if (el.textContent === def) {
+              el.remove();
+            }
+          });
+
+          dz.textContent = "";
+          dz.appendChild(createDefDiv(def));
+          dz.dataset.dropped = def;
+          dz.classList.add("connected");
+        };
+      });
+
+      const definitionsContainer = document.getElementById("definitions");
+      definitionsContainer.ondragover = (e) => e.preventDefault();
+      definitionsContainer.ondrop = (e) => {
+        e.preventDefault();
+        const def = e.dataTransfer.getData("text/plain");
+
+        document.querySelectorAll(".dropzone").forEach((dz) => {
+          if (dz.dataset.dropped === def) {
+            delete dz.dataset.dropped;
+            dz.classList.remove("connected", "correct", "incorrect");
+            dz.textContent = "";
+          }
+        });
+
+        definitionsContainer.appendChild(createDefDiv(def));
+      };
+    }
+
+    function checkAnswers() {
+      const start = currentPage * pageSize;
+      const pageData = allData.slice(start, start + pageSize);
+
+      let correctCount = 0;
+      const total = pageData.length;
+
+      document.querySelectorAll(".dropzone").forEach((dz) => {
+        const term = dz.dataset.term;
+        const dropped = dz.dataset.dropped;
+        const correct = pageData.find((item) => item.term === term);
+        if (correct && dropped === correct.def) {
+          dz.classList.remove("incorrect");
+          dz.classList.add("correct");
+          correctCount++;
+        } else {
+          dz.classList.remove("correct");
+          dz.classList.add("incorrect");
+        }
+      });
+
+      alert(`You got ${correctCount} out of ${total} correct.`);
+    }
+
+    function nextPage() {
+      const maxPage = Math.floor(allData.length / pageSize);
+      if (currentPage < maxPage) {
+        currentPage++;
+        document.querySelector("h1").innerText = `Plant Terms Matching Quiz - Page ${currentPage + 1}`;
+        renderPage();
+      }
+    }
+
+    renderPage();
+  </script>
 </body>
 </html>
+
