@@ -41,6 +41,7 @@ const termsAndDefinitions = {
     "Genetic Engineering": "A method where scientists alter an organism’s genetic material to produce desired traits."
 };
 
+// Shuffling the terms and definitions
 let shuffledTerms = Object.keys(termsAndDefinitions).sort(() => 0.5 - Math.random());
 let shuffledDefinitions = Object.values(termsAndDefinitions).sort(() => 0.5 - Math.random());
 
@@ -91,18 +92,27 @@ function dragEnd(e) {
     draggedItem = null;
 }
 
-document.getElementById('checkAnswers').addEventListener('click', function () {
-    const resultContainer = document.getElementById('result');
-    let score = 0;
+// Dropping terms and definitions
+const definitions = document.querySelectorAll('.definition');
 
-    document.querySelectorAll('.definition').forEach(definition => {
-        const matchingTerm = document.querySelector(`[data-term="${definition.textContent}"]`);
-        if (matchingTerm && matchingTerm.textContent === definition.textContent) {
-            score++;
-        }
+definitions.forEach(definition => {
+    definition.addEventListener('dragover', (e) => {
+        e.preventDefault();
     });
 
-    resultContainer.textContent = `You matched ${score} out of ${Object.keys(termsAndDefinitions).length} correctly!`;
+    definition.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const droppedTerm = draggedItem.textContent;
+        const droppedDefinition = definition.textContent;
+
+        if (termsAndDefinitions[droppedTerm] === droppedDefinition) {
+            draggedItem.classList.add('dropped');
+            definition.classList.add('dropped');
+        }
+    });
 });
 
-generateQuiz();
+// Check the answers
+document.getElementById('checkAnswers').addEventListener('click', function () {
+    const resultContainer = document.getElementById('result');
+   
