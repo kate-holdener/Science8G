@@ -42,8 +42,10 @@ const termsAndDefinitions = {
 };
 
 // Shuffle the terms and definitions
-let shuffledTerms = Object.keys(termsAndDefinitions).sort(() => 0.5 - Math.random());
-let shuffledDefinitions = Object.values(termsAndDefinitions).sort(() => 0.5 - Math.random());
+let shuffledTerms = Object.keys(termsAndDefinitions);
+let shuffledDefinitions = Object.values(termsAndDefinitions);
+shuffledTerms = shuffledTerms.sort(() => 0.5 - Math.random());
+shuffledDefinitions = shuffledDefinitions.sort(() => 0.5 - Math.random());
 
 // Set pagination variables
 const termsPerPage = 10;
