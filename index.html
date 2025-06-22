@@ -174,7 +174,8 @@
             }
             document.getElementById('quizControls').style.display = 'none';
             document.getElementById('quizTypeControls').style.display = 'none';
-            currentQuizData = [...quizSets[selectedSet]];
+
+            currentQuizData = shuffleArray(quizSets[selectedSet]);
             itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
             totalPages = Math.ceil(currentQuizData.length / itemsPerPage);
             currentPage = 1;
@@ -489,13 +490,6 @@
             updateStats();
             showInteractiveQuizControls(false);
             showQuizTypeControls(false);
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
         }
 
         function shuffleArray(array) {
