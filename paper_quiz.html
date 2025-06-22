@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Vocab Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            line-height: 1.2;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+        
+        .controls button {
+            margin: 5px 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .controls button:hover {
+            background-color: #45a049;
+        }
+        
+        .answer-key-btn {
+            background-color: #2196F3 !important;
+        }
+        
+        .answer-key-btn:hover {
+            background-color: #1976D2 !important;
+        }
+        
+        .quiz-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .terms-column {
+            padding-right: 10px;
+            flex:2;
+        }
+        .column:not(.terms-column) {
+            flex: 3; /* 2 parts for definitions */
+        }
+        
+        .term-item, .def-item {
+            margin-bottom: 10px;
+            font-size: 12px;
+            padding: 8px;
+            border: none;
+        }
+        
+        .term-number, .def-letter {
+            color: #333;
+        }
+        
+        .answer-line {
+            margin-left: 20px;
+            border-bottom: 1px solid #333;
+            width: 30px;
+            display: inline-block;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        h3 {
+            font-size: 14px;
+        }
+        
+        .instructions {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        /* Answer Key Styles */
+        .answer-key {
+            display: none;
+        }
+        
+        .answer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .term-info {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            font-size: 12px;
+            margin-right: 20px;
+        }
+        
+        .answer {
+            font-size: 12px;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .term-name {
+            color: #333;
+        }
+        
+        .term-def {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .page-title {
+            color: #333;
+        }
+        
+        @media print {
+            body { margin: 0; padding: 15px; }
+            .controls { display: none; }
+            .quiz-container { page-break-inside: avoid; }
+            h1 { page-break-after: avoid; }
+            .page-title { page-break-after: avoid; }
+            #quiz-section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button onclick="generateNewQuiz()">Generate New Quiz</button>
+        <button onclick="showQuiz()" id="quiz-btn">Show Quiz</button>
+        <button onclick="showAnswerKey()" class="answer-key-btn" id="answer-btn">Show Answer Key</button>
+        <button onclick="window.print()">Print Current View</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-section">
+        <div class="page-title">
+            <h1 id="quiz-name">Matching Quiz</h1>
+        </div>
+        <div class="quiz-container">
+            <div class="column terms-column">
+                <h3>Terms</h3>
+                <div id="terms-list">
+                    <!-- Terms will be populated here -->
+                </div>
+            </div>
+            
+            <div class="column">
+                <h3>Definitions</h3>
+                <div id="definitions-list">
+                    <!-- Definitions will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Answer Key Section -->
+    <div id="answer-key-section" class="answer-key">
+        <h1 class="page-title">Answer Key</h1>
+        <div id="answer-key-list">
+            <!-- Answer key will be populated here -->
+        </div>
+    </div>
+
+    <script>
+        // Terms will be loaded from the main application
+        let quizTerms = [];
+        let currentAnswerKey = {};
+
+        // Method 1: Get terms from URL parameters
+        function getTermsFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const termsParam = urlParams.get('terms');
+            if (termsParam) {
+                try {
+                    return JSON.parse(decodeURIComponent(termsParam));
+                } catch (e) {
+                    console.error('Error parsing terms from URL:', e);
+                    return getDefaultTerms();
+                }
+            }
+            return getDefaultTerms();
+        }
+
+        function getQuizName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('quizName') || 'Matching Quiz';
+        }
+
+
+        // Method 3: Listen for postMessage from parent window
+        function setupMessageListener() {
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'quizTerms') {
+                    quizTerms = event.data.terms;
+                    generateNewQuiz();
+                }
+            });
+        }
+
+        // Default terms (fallback)
+        function getDefaultTerms() {
+            return [
+                { term: "Phloem", def: "The vascular tissue through which food moves." },
+                { term: "Xylem", def: "Vascular tissue through which water and minerals move." },
+                { term: "Pollen", def: "Tiny structures that contain the cells that will later become sperm cells." },
+                { term: "Seed", def: "A structure that contains a young plant inside a protective covering." },
+                { term: "Embryo", def: "The young plant that develops from the zygote, or fertilized egg." },
+                { term: "Cotyledons", def: "The part of the seed where food is stored." }
+            ];
+        }
+
+        // Initialize terms based on available method
+        function initializeTerms() {
+            // Try URL parameters first
+            quizTerms = getTermsFromURL();
+            
+            // If no URL params, try sessionStorage
+            if (quizTerms.length === 0 || quizTerms === getDefaultTerms()) {
+                const storageTerms = getTermsFromStorage();
+                if (storageTerms !== getDefaultTerms()) {
+                    quizTerms = storageTerms;
+                }
+            }
+            
+            // Setup message listener for postMessage method
+            setupMessageListener();
+        }
+
+        // Helper function to generate letter labels (A, B, C... Z, AA, BB, CC...)
+        function getLetterLabel(index) {
+            if (index < 26) {
+                return String.fromCharCode(65 + index); // A-Z
+            } else {
+                const letter = String.fromCharCode(65 + (index % 26));
+                return letter + letter; // AA, BB, CC, etc.
+            }
+        }
+
+        function generateMatchingQuiz(termsAndDefs) {
+            // Create a copy of definitions and shuffle them
+            const shuffledDefs = [...termsAndDefs].sort(() => Math.random() - 0.5);
+            
+            // Create answer key mapping (term number to definition letter)
+            const answerKey = {};
+            termsAndDefs.forEach((item, index) => {
+                const termNumber = index + 1;
+                const defIndex = shuffledDefs.findIndex(def => def.def === item.def);
+                const defLetter = getLetterLabel(defIndex);
+                answerKey[termNumber] = defLetter;
+            });
+            
+            return {
+                terms: termsAndDefs,
+                shuffledDefinitions: shuffledDefs,
+                answerKey: answerKey
+            };
+        }
+
+        function populateQuiz(quizData) {
+            // quiz name
+            const quizName = getQuizName();
+            document.title = quizName;
+            const header = document.getElementById('quiz-name');
+            header.innerText = quizName;
+
+            // Populate terms
+            const termsList = document.getElementById('terms-list');
+            termsList.innerHTML = quizData.terms.map((item, index) => `
+                <div class="term-item">
+                    <span class="term-number">${index + 1}.</span> ${item.term} 
+                    <span class="answer-line"></span>
+                </div>
+            `).join('');
+
+            // Populate definitions
+            const defsList = document.getElementById('definitions-list');
+            defsList.innerHTML = quizData.shuffledDefinitions.map((item, index) => `
+                <div class="def-item">
+                    <span class="def-letter">${getLetterLabel(index)}.</span> ${item.def}
+                </div>
+            `).join('');
+
+            // Populate answer key
+            const answerKeyList = document.getElementById('answer-key-list');
+            answerKeyList.innerHTML = Object.entries(quizData.answerKey).map(([number, letter]) => {
+                const term = quizData.terms[number - 1];
+                return `
+                    <div class="answer-item">
+                        <div class="term-info">
+                            <div class="term-name">${number}. ${term.term} - ${letter} (${term.def})</div>
+                        </div>
+
+                    </div>
+                `;
+            }).join('');
+
+            // Store current answer key
+            currentAnswerKey = quizData.answerKey;
+        }
+
+        function generateNewQuiz() {
+            const quizData = generateMatchingQuiz(quizTerms);
+            populateQuiz(quizData);
+            showQuiz(); // Show quiz after generating
+        }
+
+        function showQuiz() {
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('answer-key-section').style.display = 'none';
+            document.getElementById('quiz-btn').style.backgroundColor = '#4CAF50';
+            document.getElementById('answer-btn').style.backgroundColor = '#2196F3';
+        }
+
+        function showAnswerKey() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('answer-key-section').style.display = 'block';
+            document.getElementById('quiz-btn').style.backgroundColor = '#888';
+            document.getElementById('answer-btn').style.backgroundColor = '#1976D2';
+        }
+
+        // Generate initial quiz when page loads
+        window.addEventListener('load', function() {
+            initializeTerms();
+            generateNewQuiz();
+        });
+    </script>
+</body>
+</html>
