@@ -199,15 +199,15 @@
             const endIdx = startIdx + itemsPerPage;
             currentPageData = currentQuizData.slice(startIdx, endIdx);
 
-            // Only shuffle once when loading the page for the first time
-            if (!shuffledPageData || shuffledPageData.length === 0) {
-                shuffledPageData = currentPageData.map((item, originalIndex) => ({
-                    def: item.def,
-                    correctTerm: item.term,
-                    id: `def_${startIdx + originalIndex}`
-                }));
-                shuffleArray(shuffledPageData);
-            }
+            // ALWAYS SHUFFLE DEFINITIONS FOR EACH PAGE LOAD
+            shuffledPageData = currentPageData.map((item, originalIndex) => ({
+                def: item.def,
+                correctTerm: item.term,
+                id: `def_${startIdx + originalIndex}`
+            }));
+
+            // SHUFFLE THE DEFINITIONS
+            shuffledPageData = shuffleArray(shuffledPageData);
 
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
