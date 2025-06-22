@@ -55,9 +55,9 @@
                 </div>
 
                 <div class="quiz-actions">
-                    <button class="btn btn-warning" onclick="checkAnswers()">Check Answers</button>
                     <button class="btn btn-secondary" onclick="clearMatches()">Clear All</button>
-                    <button class="btn btn-primary" onclick="nextPage()" id="nextBtn" style="display: none;">Next Page</button>
+                    <button class="btn btn-warning" onclick="checkAnswers()" id="checkAnswers" disabled>Check Answers</button>
+                    <button class="btn btn-primary" onclick="nextPage()" id="nextBtn" style="display: none;" disabled>Next Page</button>
                 </div>
 
                 <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; text-align: center;">
@@ -290,6 +290,14 @@
             renderDefinitions(shuffledPageData);
         }
 
+        function updateCheckAnswersButton() {
+            const allMatched = Object.keys(matches).length === currentPageData.length;
+            const checkBtn = document.getElementById('checkAnswers');
+            if (checkBtn) {
+                checkBtn.disabled = !allMatched;
+            }
+        }
+
         function selectDefinition(defId) {
             if (!selectedTerm) {
                 alert('Please select a term first!');
@@ -317,11 +325,13 @@
             // Re-render to show the connection
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
+            updateCheckAnswersButton();
         }
 
         function disconnectMatch(term) {
             delete matches[term];
             delete answerStates[term]; // Also clear the answer state
+            updateCheckAnswersButton();
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
         }
@@ -380,6 +390,7 @@
             matches = {};
             selectedTerm = null;
             answerStates = {}; // Clear answer states
+            updateCheckAnswersButton();
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
             
@@ -412,10 +423,8 @@
 
         function updatePageControls() {
             const nextBtn = document.getElementById('nextBtn');
-            const prevBtn = document.getElementById('prevBtn');
-            
+            nextBtn.disabled = !checkedAnswers;
             nextBtn.style.display = currentPage < totalPages ? 'inline-block' : 'none';
-            prevBtn.style.display = currentPage > 1 ? 'inline-block' : 'none';
         }
 
         function updateStats() {
