@@ -58,7 +58,6 @@
                     <button class="btn btn-warning" onclick="checkAnswers()">Check Answers</button>
                     <button class="btn btn-secondary" onclick="clearMatches()">Clear All</button>
                     <button class="btn btn-primary" onclick="nextPage()" id="nextBtn" style="display: none;">Next Page</button>
-                    <button class="btn btn-primary" onclick="prevPage()" id="prevBtn" style="display: none;">Previous Page</button>
                 </div>
 
                 <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; text-align: center;">
@@ -381,7 +380,6 @@
             matches = {};
             selectedTerm = null;
             answerStates = {}; // Clear answer states
-            checkedAnswers = false; // Reset checked state
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
             
@@ -391,6 +389,7 @@
 
         function nextPage() {
             if (currentPage < totalPages) {
+                clearMatches();
                 currentPage++;
                 shuffledPageData = []; // Reset shuffled data for new page
                 answerStates = {}; // Reset answer states for new page
