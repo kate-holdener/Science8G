@@ -70,6 +70,7 @@
                 <p>• Then click on the matching definition</p>
                 <p>• Click the × button to disconnect a match</p>
                 <p>• Check your answers when ready!</p>
+                <p>• <em>Note: Each term may have multiple possible definitions - any correct match is accepted!</em></p>
             </div>
 
             <div id="results" class="results"></div>
@@ -77,104 +78,104 @@
     </div>
 
     <script>
-        // Quiz data - you can add more sets here
-        const quizSets = {
+        // Quiz data - now supports multiple definitions per term
+           const quizSets = {
             'Seed Plants': [
-                { term: "Phloem", def: "The vascular tissue through which food moves." },
-                { term: "Xylem", def: "Vascular tissue through which water and minerals move." },
-                { term: "Pollen", def: "Tiny structures that contain the cells that will later become sperm cells." },
-                { term: "Seed", def: "A structure that contains a young plant inside a protective covering." },
-                { term: "Embryo", def: "The young plant that develops from the zygote, or fertilized egg." },
-                { term: "Cotyledons", def: "The part of the seed where food is stored." },
-                { term: "Germination", def: "The process when the embryo grows and pushes out of the seed." },
-                { term: "Root Cap", def: "Protects the root from injury as the root grows through the soil." },
-                { term: "Cambium", def: "A layer of cells which divide to produce new phloem and xylem." },
-                { term: "Stomata", def: "The small openings or pores on the surface of a leaf." },
-                { term: "Transpiration", def: "The process in which water evaporates from a plant's leaves." },
-                { term: "Gymnosperm", def: "A seed plant that produces naked seeds." },
-                { term: "Cone", def: "The reproductive structure of gymnosperms." },
-                { term: "Ovule", def: "A structure that contains an egg cell." },
-                { term: "Pollination", def: "The transfer of pollen from the male reproductive structure to the female reproductive structure." },
-                { term: "Angiosperm", def: "A flowering plant that produces seeds enclosed in a structure." },
-                { term: "Flower", def: "The reproductive structure of an angiosperm." },
-                { term: "Sepals", def: "Protect the developing flower." },
-                { term: "Petal", def: "The part of a flower that attracts pollinators." },
-                { term: "Stamen", def: "The male reproductive part of a flower." },
-                { term: "Pistil", def: "The female reproductive part of a flower." },
-                { term: "Ovary", def: "A hollow structure that protects the seeds as they develop." },
-                { term: "Fruit", def: "A ripened ovary and other structures that enclose one or more seeds." },
-                { term: "Monocots", def: "Angiosperms with only one seed leaf." },
-                { term: "Dicots", def: "Angiosperms with two seed leaves." },
-                { term: "Tropism", def: "A plant's growth response toward or away from a stimulus." },
-                { term: "Hormone", def: "A chemical that affects how a plant grows and develops." },
-                { term: "Auxin", def: "A plant hormone that speeds up the rate at which a plant's cells grow." },
-                { term: "Photoperiodism", def: "A plant's response to seasonal changes in the length of night and day." },
-                { term: "Short-Day Plants", def: "Plants that flower when nights are longer than a critical length." },
-                { term: "Long-Day Plants", def: "Plants that flower when nights are shorter than a critical length." },
-                { term: "Critical Night Length", def: "The number of hours of darkness that determines whether or not a plant will flower." },
-                { term: "Day-Neutral Plants", def: "Plants whose flowering cycle is not sensitive to periods of light or dark." },
-                { term: "Dormancy", def: "A period when an organism's growth or activity stops." },
-                { term: "Annuals", def: "Flowering plants that complete a life cycle within one growing season." },
-                { term: "Biennials", def: "Angiosperms that complete their life cycle in two years." },
-                { term: "Perennials", def: "Flowering plants that live for more than two years." },
-                { term: "Precision Farming", def: "A farming method in which farmers fine-tune the amount of water and fertilizer to match a specific field's requirements." },
-                { term: "Hydroponics", def: "A method of growing plants in solutions of nutrients instead of soil." },
-                { term: "Genetic Engineering", def: "A method where scientists alter an organism's genetic material to produce desired traits." }
+                { term: "Phloem", defs: ["The vascular tissue through which food moves.", "tissue that transports food in plants", "tubes that carry sugar throughout the plant"] },
+                { term: "Xylem", defs: ["Vascular tissue through which water and minerals move.", "tissue that transports water in plants", "tubes that carry water from roots to leaves"] },
+                { term: "Pollen", defs: ["Tiny structures that contain the cells that will later become sperm cells.", "male reproductive cells of plants", "powdery substance containing sperm cells"] },
+                { term: "Seed", defs: ["A structure that contains a young plant inside a protective covering.", "protective structure containing a plant embryo", "plant's way of reproducing and spreading"] },
+                { term: "Embryo", defs: ["The young plant that develops from the zygote, or fertilized egg.", "baby plant inside a seed", "developing plant within the seed"] },
+                { term: "Cotyledons", defs: ["The part of the seed where food is stored.", "seed leaves that store food", "first leaves that provide nutrition for germination"] },
+                { term: "Germination", defs: ["The process when the embryo grows and pushes out of the seed.", "when a seed begins to grow", "sprouting of a seed into a new plant"] },
+                { term: "Root Cap", defs: ["Protects the root from injury as the root grows through the soil.", "protective covering at root tip", "structure that shields growing roots"] },
+                { term: "Cambium", defs: ["A layer of cells which divide to produce new phloem and xylem.", "growth layer that produces new vascular tissue", "cells that make plants grow thicker"] },
+                { term: "Stomata", defs: ["The small openings or pores on the surface of a leaf.", "pores on leaves for gas exchange", "tiny openings that control water loss"] },
+                { term: "Transpiration", defs: ["The process in which water evaporates from a plant's leaves.", "water loss through leaf pores", "evaporation of water from plant surfaces"] },
+                { term: "Gymnosperm", defs: ["A seed plant that produces naked seeds.", "plants with uncovered seeds", "cone-bearing plants like pine trees"] },
+                { term: "Cone", defs: ["The reproductive structure of gymnosperms.", "seed-producing structure of conifers", "reproductive part of pine and fir trees"] },
+                { term: "Ovule", defs: ["A structure that contains an egg cell.", "female reproductive structure in plants", "part of plant that develops into a seed"] },
+                { term: "Pollination", defs: ["The transfer of pollen from the male reproductive structure to the female reproductive structure.", "movement of pollen to female parts", "process that allows plant fertilization"] },
+                { term: "Angiosperm", defs: ["A flowering plant that produces seeds enclosed in a structure.", "flowering plants with protected seeds", "plants that produce flowers and fruits"] },
+                { term: "Flower", defs: ["The reproductive structure of an angiosperm.", "plant part that produces seeds", "colorful structure for plant reproduction"] },
+                { term: "Sepals", defs: ["Protect the developing flower.", "leaf-like structures that cover flower buds", "green parts that guard the flower"] },
+                { term: "Petal", defs: ["The part of a flower that attracts pollinators.", "colorful flower part that attracts insects", "showy part of flower for attracting animals"] },
+                { term: "Stamen", defs: ["The male reproductive part of a flower.", "pollen-producing part of flower", "male flower structure that makes pollen"] },
+                { term: "Pistil", defs: ["The female reproductive part of a flower.", "egg-producing part of flower", "female flower structure that receives pollen"] },
+                { term: "Ovary", defs: ["A hollow structure that protects the seeds as they develop.", "part of pistil that contains eggs", "structure that becomes the fruit"] },
+                { term: "Fruit", defs: ["A ripened ovary and other structures that enclose one or more seeds.", "mature ovary containing seeds", "structure that protects and disperses seeds"] },
+                { term: "Monocots", defs: ["Angiosperms with only one seed leaf.", "flowering plants with one cotyledon", "plants like grasses and lilies"] },
+                { term: "Dicots", defs: ["Angiosperms with two seed leaves.", "flowering plants with two cotyledons", "plants like roses and oak trees"] },
+                { term: "Tropism", defs: ["A plant's growth response toward or away from a stimulus.", "plant movement toward or away from stimuli", "directional growth response in plants"] },
+                { term: "Hormone", defs: ["A chemical that affects how a plant grows and develops.", "chemical messenger that controls plant growth", "substance that regulates plant development"] },
+                { term: "Auxin", defs: ["A plant hormone that speeds up the rate at which a plant's cells grow.", "hormone that promotes cell growth", "chemical that causes plant bending and growth"] },
+                { term: "Photoperiodism", defs: ["A plant's response to seasonal changes in the length of night and day.", "plant response to day and night length", "how plants detect seasonal changes"] },
+                { term: "Short-Day Plants", defs: ["Plants that flower when nights are longer than a critical length.", "plants that bloom in fall or winter", "plants that flower when days are short"] },
+                { term: "Long-Day Plants", defs: ["Plants that flower when nights are shorter than a critical length.", "plants that bloom in spring or summer", "plants that flower when days are long"] },
+                { term: "Critical Night Length", defs: ["The number of hours of darkness that determines whether or not a plant will flower.", "specific dark period needed for flowering", "darkness requirement for plant blooming"] },
+                { term: "Day-Neutral Plants", defs: ["Plants whose flowering cycle is not sensitive to periods of light or dark.", "plants unaffected by day length", "plants that flower regardless of photoperiod"] },
+                { term: "Dormancy", defs: ["A period when an organism's growth or activity stops.", "resting period with no growth", "inactive state during harsh conditions"] },
+                { term: "Annuals", defs: ["Flowering plants that complete a life cycle within one growing season.", "plants that live for one year", "plants that grow, reproduce, and die in one season"] },
+                { term: "Biennials", defs: ["Angiosperms that complete their life cycle in two years.", "plants that live for two years", "plants that flower in their second year"] },
+                { term: "Perennials", defs: ["Flowering plants that live for more than two years.", "plants that live many years", "plants that return each growing season"] },
+                { term: "Precision Farming", defs: ["A farming method in which farmers fine-tune the amount of water and fertilizer to match a specific field's requirements.", "farming using technology to optimize resources", "targeted farming based on specific field needs"] },
+                { term: "Hydroponics", defs: ["A method of growing plants in solutions of nutrients instead of soil.", "growing plants without soil", "farming using nutrient-rich water solutions"] },
+                { term: "Genetic Engineering", defs: ["A method where scientists alter an organism's genetic material to produce desired traits.", "changing an organism's DNA", "modifying genes to create new traits"] }
             ],
-	    'Viruses and Bacteria': [
-            {term: "Virus", def: "A tiny non-living particle that enters and then reproduces inside a living cell."},
-            {term: "Host", def: "An organism that provides a source of energy for a virus or another organism."},
-            {term: "Parasite", def: "An organism that lives on or in a host and causes it harm."},
-            {term: "Bacteriophage", def: "A virus that infects bacteria."},
-            {term: "Bacteria", def: "Single-celled organisms that lack a nucleus; Prokaryotes."},
-            {term: "Cytoplasm", def: "The region inside the cell membrane, which contains a gel-like material."},
-            {term: "Ribosomes", def: "Chemical factories in the cytoplasm where proteins are produced."},
-            {term: "Flagellum", def: "A long whip-like structure that helps a cell to move."},
-            {term: "Respiration", def: "The process of breaking down food to release its energy."},
-            {term: "Binary Fission", def: "A form of reproduction in which one cell divides to form two identical cells."},
-            {term: "Asexual Reproduction", def: "A reproductive process that involves only one parent and produces offspring that are identical to the parent."},
-            {term: "Sexual Reproduction", def: "Involves two parents who combine their genetic material to produce a new organism, which differs from both parents."},
-            {term: "Conjugation", def: "One bacterium transfers some of its genetic material into another bacterium through a thin, thread-like bridge that joins the two cells."},
-            {term: "Endospore", def: "A small, rounded, thick-walled resting cell that forms inside a bacterial cell."},
-            {term: "Pasteurization", def: "Food is heated to a temperature that is high enough to kill most harmful bacteria without changing the taste of the food."},
-            {term: "Decomposers", def: "Organisms that break down large chemicals in dead organisms into small chemicals."},
-            {term: "Infectious Diseases", def: "Illnesses that pass from one organism to another."},
-            {term: "Toxin", def: "A poison that causes deadly diseases like tetanus."},
-            {term: "Antibiotic", def: "A chemical that can kill bacteria without harming a person's cells."},
-            {term: "Antibiotic Resistance", def: "When some bacteria are able to survive the presence of an antibiotic."},
-            {term: "Vaccine", def: "A substance introduced into the body to stimulate the production of chemicals that destroy specific viruses or bacteria."}
-            ],
-        "Cell Structure and Function": [
-            { term: "Cell", def: "The basic unit of structure and function of living things" },
-            { term: "Microscope", def: "An instrument that makes small things look larger" },
-            { term: "Cell theory", def: "A widely accepted explanation of the relationship between cells and living things" },
-            { term: "Organelle", def: "Tiny cell structures that carry out specific functions within the cell" },
-            { term: "Cell Wall", def: "A rigid layer of nonliving material that surrounds the cells of plants and some other organisms" },
-            { term: "Cell membrane", def: "A cell structure that controls which substances can enter or leave the cell" },
-            { term: "Nucleus", def: "The brain of the cell" },
-            { term: "Cytoplasm", def: "The region between the cell membrane and the nucleus" },
-            { term: "Mitochondria", def: "The 'powerhouse' of the cell because they convert energy in food molecules to energy the cell can use to carry out its functions" },
-            { term: "Endoplasmic Reticulum", def: "Passageways that carry proteins and other materials from one part of a cell to another" },
-            { term: "Ribosome", def: "Function as factories to produce proteins" },
-            { term: "Golgi body", def: "The cell's mail room that distributes the materials" },
-            { term: "Chloroplast", def: "Capture energy from sunlight and use it to produce food for the cell" },
-            { term: "Vacuole", def: "Storage areas for cells" },
-            { term: "Lysosome", def: "Small round structure containing chemicals that break down certain materials in cells" },
-            { term: "Element", def: "Any substance that cannot be broken down into simpler substances" },
-            { term: "Compound", def: "When two or more elements combine chemically" },
-            { term: "Carbohydrate", def: "An energy-rich organic compound made of the elements carbon, hydrogen, and oxygen" },
-            { term: "Lipids", def: "Energy-rich organic compounds made of carbon, hydrogen, and oxygen" },
-            { term: "Proteins", def: "Large organic molecules made of carbon, hydrogen, oxygen, nitrogen, and in some cases sulfur" },
-            { term: "Amino acids", def: "Molecules smaller than protein molecules" },
-            { term: "Enzyme", def: "A type of protein that speeds up a chemical reaction in a living thing" },
-            { term: "Nucleic Acids", def: "Very long organic molecules made of carbon, oxygen, hydrogen, nitrogen, and phosphorus" },
-            { term: "DNA", def: "The genetic material that carries info about an organism and is passed from parent to offspring" },
-            { term: "RNA", def: "Plays an important role in production of proteins" },
-            { term: "Selectively Permeable", def: "Means that some substances can pass through the membrane while others cannot" },
-            { term: "Diffusion", def: "The process by which molecules move from an area of higher concentration to an area of lower concentration" },
-            { term: "Osmosis", def: "The diffusion of water molecules through a selectively permeable membrane" },
-            { term: "Passive transport", def: "The movement of dissolved materials through a cell membrane without using cellular energy" },
-            { term: "Active transport", def: "The movement of materials through a cell membrane using cellular energy" }
+	        'Viruses and Bacteria': [
+                { term: "Virus", defs: ["A tiny non-living particle that enters and then reproduces inside a living cell.", "non-living particle that reproduces inside cells", "infectious particle that needs a host cell"] },
+                { term: "Host", defs: ["An organism that provides a source of energy for a virus or another organism.", "organism that provides energy for parasites", "living thing used by parasites"] },
+                { term: "Parasite", defs: ["An organism that lives on or in a host and causes it harm.", "organism that harms its host", "organism that benefits while harming another"] },
+                { term: "Bacteriophage", defs: ["A virus that infects bacteria.", "virus that attacks bacteria", "virus that destroys bacterial cells"] },
+                { term: "Bacteria", defs: ["Single-celled organisms that lack a nucleus; Prokaryotes.", "single-celled organisms without a nucleus", "microscopic organisms without membrane-bound organelles"] },
+                { term: "Cytoplasm", defs: ["The region inside the cell membrane, which contains a gel-like material.", "gel-like material inside the cell membrane", "watery substance that fills the cell"] },
+                { term: "Ribosomes", defs: ["Chemical factories in the cytoplasm where proteins are produced.", "structures that make proteins", "protein-making organelles"] },
+                { term: "Flagellum", defs: ["A long whip-like structure that helps a cell to move.", "whip-like structure for cell movement", "tail-like structure that propels cells"] },
+                { term: "Respiration", defs: ["The process of breaking down food to release its energy.", "process that releases energy from food", "cellular process that produces energy"] },
+                { term: "Binary Fission", defs: ["A form of reproduction in which one cell divides to form two identical cells.", "reproduction where one cell splits into two", "asexual reproduction by cell division"] },
+                { term: "Asexual Reproduction", defs: ["A reproductive process that involves only one parent and produces offspring that are identical to the parent.", "reproduction involving only one parent", "reproduction that creates identical copies"] },
+                { term: "Sexual Reproduction", defs: ["Involves two parents who combine their genetic material to produce a new organism, which differs from both parents.", "reproduction involving two parents", "reproduction that combines genetic material from two organisms"] },
+                { term: "Conjugation", defs: ["One bacterium transfers some of its genetic material into another bacterium through a thin, thread-like bridge that joins the two cells.", "bacteria sharing genetic material through a bridge", "bacterial process of exchanging DNA"] },
+                { term: "Endospore", defs: ["A small, rounded, thick-walled resting cell that forms inside a bacterial cell.", "protective resting cell formed by bacteria", "tough structure that helps bacteria survive harsh conditions"] },
+                { term: "Pasteurization", defs: ["Food is heated to a temperature that is high enough to kill most harmful bacteria without changing the taste of the food.", "heating food to kill harmful bacteria", "heat treatment that makes food safer"] },
+                { term: "Decomposers", defs: ["Organisms that break down large chemicals in dead organisms into small chemicals.", "organisms that break down dead material", "organisms that recycle nutrients from dead things"] },
+                { term: "Infectious Diseases", defs: ["Illnesses that pass from one organism to another.", "diseases that spread between organisms", "diseases caused by pathogens"] },
+                { term: "Toxin", defs: ["A poison that causes deadly diseases like tetanus.", "poison produced by bacteria", "harmful substance made by microorganisms"] },
+                { term: "Antibiotic", defs: ["A chemical that can kill bacteria without harming a person's cells.", "medicine that kills bacteria", "drug used to treat bacterial infections"] },
+                { term: "Antibiotic Resistance", defs: ["When some bacteria are able to survive the presence of an antibiotic.", "bacteria's ability to survive antibiotics", "when bacteria become immune to medicines"] },
+                { term: "Vaccine", defs: ["A substance introduced into the body to stimulate the production of chemicals that destroy specific viruses or bacteria.", "substance that helps body fight specific diseases", "medicine that prevents infections by building immunity"] }
+           ],
+            "Cell Structure and Function": [
+                { term: "Cell", defs: ["The basic unit of structure and function of living things", "basic uint of structure and function in living things"] },
+                { term: "Microscope", defs: ["An instrument that makes small things look larger", "instrument with lenses that magnifies small objects"] },
+                { term: "Cell theory", defs: ["a widely accepted explanation of the relationship between cells and living things", "explanation of the relationship between cells and living things"] },
+                { term: "Organelle", defs: ["Tiny cell structures that carry out specific functions within the cell", "membrane-bound structures of a cell"] },
+                { term: "Cell Wall", defs: ["A rigid layer of nonliving material that surrounds the cells of plants and some other organisms", "non-living outer layer of plant cell"] },
+                { term: "Cell membrane", defs: ["cell structure that controls which substances can enter or leave the cell", "structure which controls entry of materials into the cell"] },
+                { term: "Nucleus", defs: ["The brain of the cell", "organelle which houses the DNA"] },
+                { term: "Cytoplasm", defs: ["The region between the cell membrane and the nucleus", "region located inside the cell membrane"] },
+                { term: "Mitochondria", defs: ["The 'powerhouse' of the cell because they convert energy in food molecules to energy the cell can use to carry out its functions", "organelle which produces energy for the cell"] },
+                { term: "Endoplasmic Reticulum", defs: ["Passageways that carry proteins and other materials from one part of a cell to another", "cellular passageway for proteins"] },
+                { term: "Ribosome", defs: ["Function as factories to produce proteins", "organelle where proteins are assembled"] },
+                { term: "Golgi body", defs: ["The cell's mail room that distributes the materials", "packages and distributes materials within a cell"] },
+                { term: "Chloroplast", defs: ["Capture energy from sunlight and use it to produce food for the cell", "organelle which captures light to produce glucose"] },
+                { term: "Vacuole", defs: ["Storage areas for cells", "water filled sack within a cell"] },
+                { term: "Lysosome", defs: ["Small round structure containing chemicals that break down certain materials in cells", "organelle which breaks down large molecules for the cell"] },
+                { term: "Element", defs: ["Any substance that cannot be broken down into simpler substances", "substance that cannot be chemically broken down"] },
+                { term: "Compound", defs: ["When two or more elements combine chemically", "two or more elements chemically combined"] },
+                { term: "Carbohydrate", defs: ["An energy-rich organic compound made of the elements carbon, hydrogen, and oxygen", "sugars and starches"] },
+                { term: "Lipids", defs: ["Energy-rich organic compounds made of carbon, hydrogen, and oxygen", "fats or oils"] },
+                { term: "Proteins", defs: ["Large organic molecules made of carbon, hydrogen, oxygen, nitrogen, and in some cases sulfur", "organic compound of C, H, O, N"] },
+                { term: "Amino acids", defs: ["Molecules smaller than protein molecules", "molecules that link to form proteins"] },
+                { term: "Enzyme", defs: ["A type of protein that speeds up a chemical reaction in a living thing", "protein that speeds up a chemical reaction"] },
+                { term: "Nucleic Acids", defs: ["Very long organic molecules made of carbon, oxygen, hydrogen, nitrogen, and phosphorus", "DNA and RNA"] },
+                { term: "DNA", defs: ["The genetic material that carries info about an organism and is passed from parent to offspring", "deoxyribonucleic acid"] },
+                { term: "RNA", defs: ["Plays an important role in production of proteins", "ribonucleic acid"] },
+                { term: "Selectively Permeable", defs: ["Means that some substances can pass through the membrane while others cannot", "allowing only certain materials to pass through a membrane"] },
+                { term: "Diffusion", defs: ["The process by which molecules move from an area of higher concentration to an area of lower concentration", "movement of particles from high to low concentration"] },
+                { term: "Osmosis", defs: ["The diffusion of water molecules through a selectively permeable membrane", "diffusion of water through a membrane"] },
+                { term: "Passive transport", defs: ["The movement of dissolved materials through a cell membrane without using cellular energy", "movement of materials through a cell membrane without using energy"] },
+                { term: "Active transport", defs: ["The movement of materials through a cell membrane using cellular energy", "movement of materials through a cell membrane using energy"] }
             ]
         };
 
@@ -191,6 +192,7 @@
         let totalAttempts = 0;
         let firstTryCorrect = new Set();
         let answerStates = {}; // Track correct/incorrect states for each match
+        let currentDefinitionChoices = {}; // Track which definition was chosen for each term
 
         // Initialize the app
         function initializeApp() {
@@ -230,7 +232,14 @@
             document.getElementById('quizControls').style.display = 'none';
             document.getElementById('quizTypeControls').style.display = 'none';
 
-            currentQuizData = shuffleArray(quizSets[selectedSet]);
+            // Convert multi-definition format to single definition format for processing
+            const rawData = quizSets[selectedSet];
+            currentQuizData = shuffleArray(rawData.map(item => ({
+                term: item.term,
+                def: getRandomDefinition(item.defs),
+                allDefs: item.defs // Keep all definitions for answer checking
+            })));
+
             itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
             totalPages = Math.ceil(currentQuizData.length / itemsPerPage);
             currentPage = 1;
@@ -241,12 +250,16 @@
             totalAttempts = 0;
             firstTryCorrect = new Set();
             answerStates = {}; // Reset answer states
+            currentDefinitionChoices = {}; // Reset definition choices
 
             document.getElementById('quizArea').classList.add('active');
             loadCurrentPage();
             updateStats();
             updatePageControls();
+        }
 
+        function getRandomDefinition(definitions) {
+            return definitions[Math.floor(Math.random() * definitions.length)];
         }
 
         function loadCurrentPage() {
@@ -254,10 +267,17 @@
             const endIdx = startIdx + itemsPerPage;
             currentPageData = currentQuizData.slice(startIdx, endIdx);
 
+            // For each new page load, randomly select definitions again
+            currentPageData = currentPageData.map((item, index) => ({
+                ...item,
+                def: getRandomDefinition(item.allDefs) // Pick a new random definition
+            }));
+
             // ALWAYS SHUFFLE DEFINITIONS FOR EACH PAGE LOAD
             shuffledPageData = currentPageData.map((item, originalIndex) => ({
                 def: item.def,
                 correctTerm: item.term,
+                allCorrectDefs: item.allDefs, // Include all possible definitions for checking
                 id: `def_${startIdx + originalIndex}`
             }));
 
@@ -438,11 +458,18 @@
             // Check each match and save the state
             Object.keys(matches).forEach(term => {
                 const defId = matches[term];
-                const defContainer = document.querySelector(`[data-def-id="${defId}"]`);
+                const defContainer = shuffledPageData.find(item => item.id === defId);
                 if (!defContainer) return;
                 
-                const correctTerm = defContainer.dataset.correctTerm;
-                const isCorrect = correctTerm === term;
+                // Check if the matched term is correct for ANY of the possible definitions
+                const isCorrect = defContainer.allCorrectDefs && 
+                    defContainer.allCorrectDefs.some(def => {
+                        // Find which term this definition belongs to
+                        const correctTermForThisDef = currentPageData.find(item => 
+                            item.allDefs && item.allDefs.includes(def)
+                        );
+                        return correctTermForThisDef && correctTermForThisDef.term === term;
+                    });
                 
                 // Save the answer state
                 answerStates[term] = isCorrect;
@@ -465,6 +492,7 @@
                 <h3>Results for this page: ${correct}/${total} correct (${Math.round(correct/total*100)}%)</h3>
                 <p>Green matches are correct, red matches are incorrect.</p>
                 <p>You can disconnect and reconnect matches to fix errors, or move to the next page.</p>
+                <p><em>Note: Terms may have multiple correct definitions - any valid match is accepted!</em></p>
             `;
             resultsDiv.classList.add('show');
 
@@ -542,6 +570,7 @@
             firstTryCorrect = new Set();
             answerStates = {}; // Reset answer states
             checkedAnswers = false; // Reset checked state
+            currentDefinitionChoices = {}; // Reset definition choices
             updateStats();
             showInteractiveQuizControls(false);
             showQuizTypeControls(false);
@@ -558,7 +587,12 @@
 
         function openPaperQuiz() {
             const quizSet = document.getElementById('quizSet').value;
-            const terms = quizSets[quizSet] || [];
+            const rawTerms = quizSets[quizSet] || [];
+            // Convert to old format for paper quiz compatibility
+            const terms = rawTerms.map(item => ({
+                term: item.term,
+                def: getRandomDefinition(item.defs)
+            }));
             const termsParam = encodeURIComponent(JSON.stringify(terms));
             const quizURL = `paper_quiz.html?terms=${termsParam}&quizName=${quizSet}`;
             window.open(quizURL, '_blank');
