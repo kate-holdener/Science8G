@@ -6,85 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matching Quiz Practice</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        .fill-in-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .fill-in-item {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-        .fill-in-item.correct {
-            border-color: #4CAF50;
-            background: #f1f8f4;
-        }
-        .fill-in-item.incorrect {
-            border-color: #f44336;
-            background: #fef1f0;
-        }
-        .fill-in-definition {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .fill-in-input-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .fill-in-input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-        }
-        .fill-in-input:focus {
-            outline: none;
-            border-color: #2196F3;
-        }
-        .fill-in-input.correct {
-            border-color: #4CAF50;
-            background: #f1f8f4;
-        }
-        .fill-in-input.incorrect {
-            border-color: #f44336;
-            background: #fef1f0;
-        }
-        .fill-in-feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .fill-in-feedback.correct {
-            color: #4CAF50;
-            background: #f1f8f4;
-        }
-        .fill-in-feedback.incorrect {
-            color: #f44336;
-            background: #fef1f0;
-        }
-        .fill-in-number {
-            display: inline-block;
-            background: #2196F3;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -112,87 +33,54 @@
                 <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
             </div>
             <div class="controls" id="quizTypeControls" style="display: none;">
-                <button class="btn btn-primary" onclick="showInteractiveQuizControls(true)">Matching Quiz</button>
-                <button class="btn btn-primary" onclick="showFillInControls(true)">Fill-in Quiz</button>
+                <button class="btn btn-primary" onclick="showInteractiveQuizControls(true)">Interactive Quiz</button>
                 <button class="btn btn-secondary" onclick="openPaperQuiz()">Paper Quiz</button>
             </div>
             <div class="controls" id="quizControls" style="display: none;">
                 <label for="itemsPerPage">Items per page:</label>
                 <input type="number" id="itemsPerPage" value="10" min="5" max="20">
-                <button class="btn btn-primary" onclick="startQuiz()">Start Matching Quiz</button>
-            </div>
-            <div class="controls" id="fillInControls" style="display: none;">
-                <label for="fillInItemsPerPage">Items per page:</label>
-                <input type="number" id="fillInItemsPerPage" value="10" min="5" max="20">
-                <button class="btn btn-primary" onclick="startFillInQuiz()">Start Fill-in Quiz</button>
+                <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
             </div>
 
-            <!-- MATCHING QUIZ AREA -->
             <div id="quizArea" class="quiz-area">
-                <div class="page-info">
-                    <span id="pageInfo">Page 1 of 1</span>
-                </div>
-
-                <div class="matching-container">
-                    <div class="terms-column">
-                        <div class="column-title">📚 Terms</div>
-                        <div id="termsContainer"></div>
-                    </div>
-                    <div class="definitions-column">
-                        <div class="column-title">📖 Definitions</div>
-                        <div id="definitionsContainer"></div>
-                    </div>
-                </div>
-
-                <div class="quiz-actions">
-                    <button class="btn btn-secondary" onclick="clearMatches()">Clear All</button>
-                    <button class="btn btn-warning" onclick="checkAnswers()" id="checkAnswers" disabled>Check Answers</button>
-                    <button class="btn btn-primary" onclick="nextPage()" id="nextBtn" style="display: none;" disabled>Next Page</button>
-                </div>
-
-                <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; text-align: center;">
-                    <p><strong>💡 How to use:</strong></p>
-                    <p>• Click on a term to select it (it will turn blue)</p>
-                    <p>• Then click on the matching definition</p>
-                    <p>• Click the × button to disconnect a match</p>
-                    <p>• Check your answers when ready!</p>
-                    <p>• <em>Note: Each term may have multiple possible definitions - any correct match is accepted!</em></p>
-                </div>
-
-                <div id="results" class="results"></div>
+            <div class="page-info">
+                <span id="pageInfo">Page 1 of 1</span>
             </div>
 
-            <!-- FILL-IN QUIZ AREA -->
-            <div id="fillInArea" class="quiz-area" style="display: none;">
-                <div class="page-info">
-                    <span id="fillInPageInfo">Page 1 of 1</span>
+            <div class="matching-container">
+                <div class="terms-column">
+                    <div class="column-title">📚 Terms</div>
+                    <div id="termsContainer"></div>
                 </div>
-
-                <div class="fill-in-container" id="fillInContainer"></div>
-
-                <div class="quiz-actions">
-                    <button class="btn btn-secondary" onclick="clearFillInAnswers()">Clear All</button>
-                    <button class="btn btn-warning" onclick="checkFillInAnswers()" id="checkFillInAnswers">Check Answers</button>
-                    <button class="btn btn-primary" onclick="nextFillInPage()" id="nextFillInBtn" style="display: none;" disabled>Next Page</button>
+                <div class="definitions-column">
+                    <div class="column-title">📖 Definitions</div>
+                    <div id="definitionsContainer"></div>
                 </div>
-
-                <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; text-align: center;">
-                    <p><strong>💡 How to use:</strong></p>
-                    <p>• Read each definition carefully</p>
-                    <p>• Type the correct term in the input box</p>
-                    <p>• Spelling must be exact (not case-sensitive)</p>
-                    <p>• Click "Check Answers" when ready!</p>
-                </div>
-
-                <div id="fillInResults" class="results"></div>
             </div>
+
+            <div class="quiz-actions">
+                <button class="btn btn-secondary" onclick="clearMatches()">Clear All</button>
+                <button class="btn btn-warning" onclick="checkAnswers()" id="checkAnswers" disabled>Check Answers</button>
+                <button class="btn btn-primary" onclick="nextPage()" id="nextBtn" style="display: none;" disabled>Next Page</button>
+            </div>
+
+            <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; text-align: center;">
+                <p><strong>💡 How to use:</strong></p>
+                <p>• Click on a term to select it (it will turn blue)</p>
+                <p>• Then click on the matching definition</p>
+                <p>• Click the × button to disconnect a match</p>
+                <p>• Check your answers when ready!</p>
+                <p>• <em>Note: Each term may have multiple possible definitions - any correct match is accepted!</em></p>
+            </div>
+
+            <div id="results" class="results"></div>
         </div>            
     </div>
 
     <script>
         // Quiz data - now supports multiple definitions per term
-        const quizSets = {
-                        'Seed Plants': [
+           const quizSets = {
+            'Seed Plants': [
                 { term: "Phloem", defs: ["The vascular tissue through which food moves.", "tissue that transports food in plants", "tubes that carry sugar throughout the plant"] },
                 { term: "Xylem", defs: ["Vascular tissue through which water and minerals move.", "tissue that transports water in plants", "tubes that carry water from roots to leaves"] },
                 { term: "Pollen", defs: ["Tiny structures that contain the cells that will later become sperm cells.", "male reproductive cells of plants", "powdery substance containing sperm cells"] },
@@ -258,7 +146,7 @@
                 { term: "Vaccine", defs: ["A substance introduced into the body to stimulate the production of chemicals that destroy specific viruses or bacteria.", "substance that helps body fight specific diseases", "medicine that prevents infections by building immunity"] }
            ],
             "Cell Structure and Function": [
-                                { term: "Cell", defs: ["The basic unit of structure and function of living things", "basic uint of structure and function in living things"] },
+                { term: "Cell", defs: ["The basic unit of structure and function of living things", "basic uint of structure and function in living things"] },
                 { term: "Microscope", defs: ["An instrument that makes small things look larger", "instrument with lenses that magnifies small objects"] },
                 { term: "Cell theory", defs: ["a widely accepted explanation of the relationship between cells and living things", "explanation of the relationship between cells and living things"] },
                 { term: "Organelle", defs: ["Tiny cell structures that carry out specific functions within the cell", "membrane-bound structures of a cell"] },
@@ -289,6 +177,91 @@
                 { term: "Passive transport", defs: ["The movement of dissolved materials through a cell membrane without using cellular energy", "movement of materials through a cell membrane without using energy"] },
                 { term: "Active transport", defs: ["The movement of materials through a cell membrane using cellular energy", "movement of materials through a cell membrane using energy"] }
             ],
+			"Nordic Countries": [
+				{term: "Denmark", defs: ["Copenhagen"]},
+				{term: "Norway", defs: ["Oslo"]},
+				{term: "Iceland", defs: ["Reykjavik"]},
+				{term: "Sweden", defs: ["Stockholm"]},
+				{term: "Finland", defs: ["Helsinki"]}
+			],
+			"Western Europe": [
+				{term: "France", defs: ["Paris"]},
+				{term: "Monaco", defs: ["Monaco"]},
+				{term: "Netherlands", defs: ["Amsterdam"]},
+				{term: "Luxembourg", defs: ["Luxembourg"]},
+				{term: "Belgium", defs: ["Brussels"]},
+				{term: "United Kingdom", defs: ["London"]},
+				{term: "Ireland", defs: ["Dublin"]}
+			],
+			"Central Europe": [
+				{term: "Liechtenstein", defs: ["Vaduz"]},
+				{term: "Germany", defs: ["Berlin"]},
+				{term: "Poland", defs: ["Warsaw"]},
+				{term: "Hungary", defs: ["Budapest"]},
+				{term: "Czechia", defs: ["Prague"]},
+				{term: "Austria", defs: ["Vienna"]},
+				{term: "Slovakia", defs: ["Bratislava"]},
+				{term: "Switzerland", defs: ["Bern"]}
+			],
+			"Eastern Europe": [
+				{term: "Estonia", defs: ["Tallin"]},
+				{term: "Lithuania", defs: ["Vilnius"]},
+			    {term: "Belarus", defs: ["Minsk"]},
+				{term: "Moldova", defs: ["Chisinau"]},
+		        {term: "Ukraine", defs: ["Kiev"]},
+		        {term: "Latvia", defs: ["Riga"]},
+				{term: "Russia", defs: ["Moscow"]}
+			],
+			"Southeastern Europe": [
+				{term: "Albania", defs: ["Tirana"]},
+				{term: "Bosnia and Herzegovina", defs: ["Sarajevo"]},
+				{term: "Bulgaria", defs: ["Sofia"]},
+				{term: "Croatia", defs: ["Zagreb"]},
+				{term: "Cyprus", defs: ["Nicosia"]},
+				{term: "Greece", defs: ["Athens"]},
+				{term: "Kosovo", defs: ["Pristina"]},
+				{term: "North Macedonia", defs: ["Skopje"]},
+				{term: "Montenegro", defs: ["Podgorica"]},
+				{term: "Romania", defs: ["Bucharest"]},
+				{term: "Serbia", defs: ["Belgrade"]},
+				{term: "Slovenia", defs: ["Ljubljana"]},
+				{term: "Turkey", defs: ["Ankara"]}
+			],
+
+			"Language & Communication": [
+			    {term: "accent", defs: ["A style of speech or pronunciation that is characteristic of a certain region or country", "To emphasize in speech or in music"]},
+			    {term: "articulate", defs: ["Expressed in a clear and effective manner", "Able to speak effectively", "To express in words"]},
+			    {term: "dialect", defs: ["The form or version of a language that is spoken in a country or region or by a particular social group"]},
+			    {term: "diction", defs: ["The choice and use of words in speaking or writing", "Distinctness of pronunciation"]},
+			    {term: "enunciate", defs: ["To pronounce, especially in a clear manner", "To state or set forth clearly"]},
+			    {term: "fundamental", defs: ["Basic; primary; essential", "Of major significance", "A basic or necessary part: the fundamentals of science"]},
+			    {term: "intelligible", defs: ["Able to be understood"]},
+			    {term: "peer", defs: ["A person who is equal to another in age, class, or rank", "A member of the British nobility"]},
+			    {term: "status", defs: ["Position in society; condition", "A stage of progress or development"]},
+			    {term: "stress", defs: ["To emphasize, particularly when speaking", "Emphasis, particularly when speaking", "Importance; significance"]}
+			],
+			"Social & Community": [
+			    {term: "accompanist", defs: ["A musician, such as a pianist, who plays along with a performer or performers"]},
+			    {term: "accomplice", defs: ["One who knowingly aids or helps another person break a law but is not necessarily present at the time of the crime"]},
+			    {term: "communal", defs: ["Belonging to a community, group, or society; public"]},
+			    {term: "congregate", defs: ["To bring or come together in a crowd or assembly"]},
+			    {term: "consensus", defs: ["General agreement among a group of people"]},
+			    {term: "inductee", defs: ["A new member of a club or organization; a person being placed formally in an office, a society, or the armed forces"]},
+			    {term: "miscellaneous", defs: ["Made up of a variety of different elements or ingredients", "Not falling into a particular category"]},
+			    {term: "throng", defs: ["A large group of people or things gathered or packed closely together; a crowd", "To crowd into; gather"]}
+			],
+			"Geography & Land": [
+			    {term: "insular", defs: ["Relating to an island", "Characteristic of the isolated life of an island people", "Narrow-minded"]},
+			    {term: "latitude", defs: ["The distance north or south of the equator, measured in degrees", "Freedom from usual restraint"]},
+			    {term: "longitude", defs: ["The distance east or west of Greenwich, England, and measured in degrees"]},
+			    {term: "meridian", defs: ["Any of the imaginary circles around the earth that pass through the North Pole and South Pole"]},
+			    {term: "panorama", defs: ["A wide-ranging view over a large area", "A comprehensive picture of a specific subject; an overview"]},
+			    {term: "peninsula", defs: ["A strip of land with water on three sides"]},
+			    {term: "precipice", defs: ["A steep cliff or overhanging rock"]},
+			    {term: "quagmire", defs: ["Muddy land into which one can easily sink", "A difficult situation in which one can get caught; entanglement"]},
+			    {term: "terrestrial", defs: ["Having to do with the earth", "Of or consisting of land in contrast to water or air"]},
+			    {term: "topography", defs: ["The physical features of a region, such as mountains, plains, and rivers"]}
+			],
             "Chapter 2": [
                 {term: "autotroph", defs: ["an organism that is photosynthetic"]},
                 {term: "heterotroph", defs: ["an organism that is not photosynthetic"]},
@@ -308,22 +281,6 @@
                 {term: "replication", defs: ["to duplicate a substance, such as a cell or DNA"]},
                 {term: "stomata", defs: ["pore on the under side of a leaf for the exchange of air"]},
                 {term: "tumor", defs: ["hard growth of tissue as a result of a cancer"]}
-            ],
-            "Cell Cycle": [
-                {term: "prophase", defs: ["chromotin coils into chromosomes"]},
-                {term: "telophase", defs: ["nuclear membrane (N membrane) reforms"]},
-                {term: "prophase", defs: ["spindle migrates to the poles"]},
-                {term: "telophase", defs: ["DNA uncoiled as chromatin"]},
-                {term: "telophase", defs: ["Cell membrane begins to pinch in"]},
-                {term: "anaphase", defs: ["chromosomes pull apart into chromotids"]},
-                {term: "metaphase", defs: ["spindle aligns chromosomes at equator"]},
-                {term: "prophase", defs: ["N membraine (nuclear membrane) breaks down"]},
-                {term: "interphase", defs: ["N membrane (nuclear membrane) intact"]},
-                {term: "telophase", defs: ["spindle breaks down"]},
-                {term: "interphase", defs: ["DNA replicates itself from 2N to 4N"]},
-                {term: "cytokinesis", defs: ["centrioles at rest"]},
-                {term: "telophase", defs: ["chromotids uncoil back into chromatin"]},
-                {term: "cytokinesis", defs: ["cell membrane pinches into two daughter cells"]},
             ]
         };
 
@@ -339,20 +296,8 @@
         let correctCount = 0;
         let totalAttempts = 0;
         let firstTryCorrect = new Set();
-        let answerStates = {};
-        let currentDefinitionChoices = {};
-
-        // Fill-in quiz variables
-        let fillInQuizData = [];
-        let fillInPageData = [];
-        let fillInCurrentPage = 0;
-        let fillInTotalPages = 1;
-        let fillInItemsPerPage = 10;
-        let fillInAnswers = {};
-        let fillInChecked = false;
-        let fillInCorrectCount = 0;
-        let fillInTotalAttempts = 0;
-        let fillInFirstTryCorrect = new Set();
+        let answerStates = {}; // Track correct/incorrect states for each match
+        let currentDefinitionChoices = {}; // Track which definition was chosen for each term
 
         // Initialize the app
         function initializeApp() {
@@ -371,6 +316,7 @@
                 select.appendChild(option);
             });
 
+            // Show quizTypeControls when a set is selected
             select.addEventListener('change', function() {
                 const quizTypeControls = document.getElementById('quizTypeControls');
                 if (this.value) {
@@ -381,7 +327,7 @@
             });
         }
 
-        // MATCHING QUIZ FUNCTIONS
+       
         function startQuiz() {
             const selectedSet = document.getElementById('quizSet').value;
             if (!selectedSet) {
@@ -390,14 +336,13 @@
             }
             document.getElementById('quizControls').style.display = 'none';
             document.getElementById('quizTypeControls').style.display = 'none';
-            document.getElementById('fillInArea').style.display = 'none';
-            document.getElementById('quizArea').classList.add('active');
 
+            // Convert multi-definition format to single definition format for processing
             const rawData = quizSets[selectedSet];
             currentQuizData = shuffleArray(rawData.map(item => ({
                 term: item.term,
                 def: getRandomDefinition(item.defs),
-                allDefs: item.defs
+                allDefs: item.defs // Keep all definitions for answer checking
             })));
 
             itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
@@ -409,8 +354,8 @@
             correctCount = 0;
             totalAttempts = 0;
             firstTryCorrect = new Set();
-            answerStates = {};
-            currentDefinitionChoices = {};
+            answerStates = {}; // Reset answer states
+            currentDefinitionChoices = {}; // Reset definition choices
 
             document.getElementById('quizArea').classList.add('active');
             loadCurrentPage();
@@ -427,18 +372,21 @@
             const endIdx = startIdx + itemsPerPage;
             currentPageData = currentQuizData.slice(startIdx, endIdx);
 
+            // For each new page load, randomly select definitions again
             currentPageData = currentPageData.map((item, index) => ({
                 ...item,
-                def: getRandomDefinition(item.allDefs)
+                def: getRandomDefinition(item.allDefs) // Pick a new random definition
             }));
 
+            // ALWAYS SHUFFLE DEFINITIONS FOR EACH PAGE LOAD
             shuffledPageData = currentPageData.map((item, originalIndex) => ({
                 def: item.def,
                 correctTerm: item.term,
-                allCorrectDefs: item.allDefs,
+                allCorrectDefs: item.allDefs, // Include all possible definitions for checking
                 id: `def_${startIdx + originalIndex}`
             }));
 
+            // SHUFFLE THE DEFINITIONS
             shuffledPageData = shuffleArray(shuffledPageData);
 
             renderTerms(currentPageData);
@@ -459,12 +407,14 @@
                 div.dataset.term = item.term;
                 div.innerHTML = `<strong>${item.term}</strong>`;
                 
+                // Check if this term is already matched
                 if (matches[item.term]) {
                     div.classList.add('matched');
                     div.style.opacity = '0.5';
                 } else {
                     div.addEventListener('click', () => selectTerm(item.term));
                     
+                    // Check if this is the selected term
                     if (selectedTerm === item.term) {
                         div.classList.add('selected');
                     }
@@ -484,6 +434,7 @@
                 div.dataset.correctTerm = item.correctTerm;
                 div.dataset.defId = item.id;
                 
+                // Check if this definition is already matched
                 const matchedTerm = Object.keys(matches).find(term => matches[term] === item.id);
                 
                 if (matchedTerm) {
@@ -498,11 +449,14 @@
                     defDiv.className = 'matched-definition';
                     defDiv.innerHTML = item.def;
                     
+                    // Apply saved answer state styling if answers have been checked
                     if (checkedAnswers && answerStates[matchedTerm] !== undefined) {
                         if (answerStates[matchedTerm]) {
+                            // Correct match
                             termDiv.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
                             defDiv.style.borderColor = '#4CAF50';
                         } else {
+                            // Incorrect match
                             termDiv.style.background = 'linear-gradient(135deg, #f44336 0%, #d32f2f 100%)';
                             defDiv.style.borderColor = '#f44336';
                         }
@@ -515,6 +469,7 @@
                     div.innerHTML = item.def;
                     div.addEventListener('click', () => selectDefinition(item.id));
                     
+                    // Highlight if we have a selected term
                     if (selectedTerm) {
                         div.classList.add('can-match');
                     }
@@ -525,17 +480,27 @@
         }
 
         function showInteractiveQuizControls(doShow) {
-            document.getElementById('quizControls').style.display = doShow ? 'block' : 'none';
-            document.getElementById('fillInControls').style.display = 'none';
+            const controls = document.getElementById('quizControls');
+            if (doShow) {
+                controls.style.display = 'block';
+            } else {
+                controls.style.display = 'none';
+            }
         }
 
         function showQuizTypeControls(doShow){
-            document.getElementById('quizTypeControls').style.display = doShow ? 'block' : 'none';
+            const controls = document.getElementById('quizTypeControls');
+            if (doShow) {
+                controls.style.display = 'block';
+            } else {
+                controls.style.display = 'none';
+            }
         }
 
         function selectTerm(term) {
-            if (matches[term]) return;
-            selectedTerm = selectedTerm === term ? null : term;
+            if (matches[term]) return; // Don't select already matched terms
+            
+            selectedTerm = selectedTerm === term ? null : term; // Toggle selection
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
         }
@@ -554,20 +519,25 @@
                 return;
             }
             
+            // Check if this definition is already matched
             const existingMatch = Object.keys(matches).find(term => matches[term] === defId);
             if (existingMatch) {
                 alert('This definition is already matched. Disconnect it first.');
                 return;
             }
             
+            // Clear any existing match for the selected term
             if (matches[selectedTerm]) {
                 delete matches[selectedTerm];
+                // Also clear the answer state for this term
                 delete answerStates[selectedTerm];
             }
             
+            // Create new match
             matches[selectedTerm] = defId;
-            selectedTerm = null;
+            selectedTerm = null; // Clear selection after matching
             
+            // Re-render to show the connection
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
             updateCheckAnswersButton();
@@ -575,7 +545,7 @@
 
         function disconnectMatch(term) {
             delete matches[term];
-            delete answerStates[term];
+            delete answerStates[term]; // Also clear the answer state
             updateCheckAnswersButton();
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
@@ -590,19 +560,23 @@
             let correct = 0;
             let total = Object.keys(matches).length;
 
+            // Check each match and save the state
             Object.keys(matches).forEach(term => {
                 const defId = matches[term];
                 const defContainer = shuffledPageData.find(item => item.id === defId);
                 if (!defContainer) return;
                 
+                // Check if the matched term is correct for ANY of the possible definitions
                 const isCorrect = defContainer.allCorrectDefs && 
                     defContainer.allCorrectDefs.some(def => {
+                        // Find which term this definition belongs to
                         const correctTermForThisDef = currentPageData.find(item => 
                             item.allDefs && item.allDefs.includes(def)
                         );
                         return correctTermForThisDef && correctTermForThisDef.term === term;
                     });
                 
+                // Save the answer state
                 answerStates[term] = isCorrect;
                 
                 if (isCorrect) {
@@ -631,13 +605,14 @@
             updateStats();
             updatePageControls();
             
+            // Re-render to apply the styling
             renderDefinitions(shuffledPageData);
         }
 
         function clearMatches() {
             matches = {};
             selectedTerm = null;
-            answerStates = {};
+            answerStates = {}; // Clear answer states
             updateCheckAnswersButton();
             renderTerms(currentPageData);
             renderDefinitions(shuffledPageData);
@@ -650,9 +625,9 @@
             if (currentPage < totalPages) {
                 clearMatches();
                 currentPage++;
-                shuffledPageData = [];
-                answerStates = {};
-                checkedAnswers = false;
+                shuffledPageData = []; // Reset shuffled data for new page
+                answerStates = {}; // Reset answer states for new page
+                checkedAnswers = false; // Reset checked state for new page
                 loadCurrentPage();
                 updatePageControls();
             }
@@ -661,9 +636,9 @@
         function prevPage() {
             if (currentPage > 1) {
                 currentPage--;
-                shuffledPageData = [];
-                answerStates = {};
-                checkedAnswers = false;
+                shuffledPageData = []; // Reset shuffled data for new page
+                answerStates = {}; // Reset answer states for new page
+                checkedAnswers = false; // Reset checked state for new page
                 loadCurrentPage();
                 updatePageControls();
             }
@@ -676,225 +651,18 @@
         }
 
         function updateStats() {
-            document.getElementById('currentPage').textContent = currentPage || fillInCurrentPage;
-            document.getElementById('totalPages').textContent = totalPages || fillInTotalPages;
-            document.getElementById('correctCount').textContent = firstTryCorrect.size || fillInFirstTryCorrect.size;
-            document.getElementById('totalAttempts').textContent = Math.max(totalAttempts, firstTryCorrect.size) || Math.max(fillInTotalAttempts, fillInFirstTryCorrect.size);
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('totalPages').textContent = totalPages;
+            document.getElementById('correctCount').textContent = firstTryCorrect.size;
+            document.getElementById('totalAttempts').textContent = Math.max(totalAttempts, firstTryCorrect.size);
             
-            const attempts = totalAttempts || fillInTotalAttempts;
-            const correct = firstTryCorrect.size || fillInFirstTryCorrect.size;
-            const accuracy = attempts > 0 ? Math.round(correct / attempts * 100) : 0;
+            const accuracy = totalAttempts > 0 ? Math.round(firstTryCorrect.size / totalAttempts * 100) : 0;
             document.getElementById('accuracy').textContent = accuracy + '%';
-        }
-
-        // FILL-IN QUIZ FUNCTIONS
-        function showFillInControls(doShow) {
-            document.getElementById('fillInControls').style.display = doShow ? 'block' : 'none';
-            document.getElementById('quizControls').style.display = 'none';
-        }
-
-        function startFillInQuiz() {
-            const selectedSet = document.getElementById('quizSet').value;
-            if (!selectedSet) {
-                alert('Please select a quiz set first!');
-                return;
-            }
-
-            document.getElementById('fillInControls').style.display = 'none';
-            document.getElementById('quizTypeControls').style.display = 'none';
-            document.getElementById('quizArea').classList.remove('active');
-            document.getElementById('fillInArea').style.display = 'block';
-
-            const rawData = quizSets[selectedSet];
-            fillInQuizData = shuffleArray(rawData.map(item => ({
-                term: item.term,
-                def: getRandomDefinition(item.defs),
-                allDefs: item.defs
-            })));
-
-            fillInItemsPerPage = parseInt(document.getElementById('fillInItemsPerPage').value);
-            fillInTotalPages = Math.ceil(fillInQuizData.length / fillInItemsPerPage);
-            fillInCurrentPage = 1;
-            fillInAnswers = {};
-            fillInChecked = false;
-            fillInCorrectCount = 0;
-            fillInTotalAttempts = 0;
-            fillInFirstTryCorrect = new Set();
-
-            loadFillInPage();
-            updateStats();
-            updateFillInPageControls();
-        }
-
-        function loadFillInPage() {
-            const startIdx = (fillInCurrentPage - 1) * fillInItemsPerPage;
-            const endIdx = startIdx + fillInItemsPerPage;
-            fillInPageData = fillInQuizData.slice(startIdx, endIdx);
-
-            renderFillInQuestions();
-            
-            document.getElementById('fillInPageInfo').textContent = `Page ${fillInCurrentPage} of ${fillInTotalPages}`;
-            document.getElementById('fillInResults').innerHTML = '';
-            document.getElementById('fillInResults').classList.remove('show');
-        }
-
-        function renderFillInQuestions() {
-            const container = document.getElementById('fillInContainer');
-            container.innerHTML = '';
-
-            fillInPageData.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'fill-in-item';
-                itemDiv.id = `fill-in-item-${index}`;
-
-                const defDiv = document.createElement('div');
-                defDiv.className = 'fill-in-definition';
-                defDiv.innerHTML = `<span class="fill-in-number">${index + 1}</span>${item.def}`;
-
-                const inputWrapper = document.createElement('div');
-                inputWrapper.className = 'fill-in-input-wrapper';
-
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'fill-in-input';
-                input.placeholder = 'Type your answer here...';
-                input.id = `fill-in-input-${index}`;
-                input.dataset.correctTerm = item.term;
-                
-                // Restore previous answer if it exists
-                if (fillInAnswers[index] !== undefined) {
-                    input.value = fillInAnswers[index];
-                }
-
-                // Save answer on input
-                input.addEventListener('input', (e) => {
-                    fillInAnswers[index] = e.target.value;
-                });
-
-                // Allow Enter key to move to next input
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        const nextInput = document.getElementById(`fill-in-input-${index + 1}`);
-                        if (nextInput) {
-                            nextInput.focus();
-                        } else {
-                            checkFillInAnswers();
-                        }
-                    }
-                });
-
-                inputWrapper.appendChild(input);
-
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.className = 'fill-in-feedback';
-                feedbackDiv.id = `fill-in-feedback-${index}`;
-                feedbackDiv.style.display = 'none';
-
-                itemDiv.appendChild(defDiv);
-                itemDiv.appendChild(inputWrapper);
-                itemDiv.appendChild(feedbackDiv);
-                container.appendChild(itemDiv);
-            });
-        }
-
-        function checkFillInAnswers() {
-            let correct = 0;
-            let total = fillInPageData.length;
-
-            fillInPageData.forEach((item, index) => {
-                const input = document.getElementById(`fill-in-input-${index}`);
-                const feedback = document.getElementById(`fill-in-feedback-${index}`);
-                const itemDiv = document.getElementById(`fill-in-item-${index}`);
-                const userAnswer = (fillInAnswers[index] || '').trim().toLowerCase();
-                const correctAnswer = item.term.toLowerCase();
-
-                const isCorrect = userAnswer === correctAnswer;
-
-                if (isCorrect) {
-                    correct++;
-                    if (!fillInChecked) {
-                        fillInFirstTryCorrect.add(index);
-                    }
-                    input.classList.remove('incorrect');
-                    input.classList.add('correct');
-                    itemDiv.classList.remove('incorrect');
-                    itemDiv.classList.add('correct');
-                    feedback.className = 'fill-in-feedback correct';
-                    feedback.innerHTML = '✓ Correct!';
-                    feedback.style.display = 'block';
-                } else {
-                    input.classList.remove('correct');
-                    input.classList.add('incorrect');
-                    itemDiv.classList.remove('correct');
-                    itemDiv.classList.add('incorrect');
-                    feedback.className = 'fill-in-feedback incorrect';
-                    feedback.innerHTML = `✗ Incorrect. The correct answer is: <strong>${item.term}</strong>`;
-                    feedback.style.display = 'block';
-                }
-            });
-
-            if (!fillInChecked) {
-                fillInTotalAttempts += total;
-                fillInCorrectCount += correct;
-            }
-
-            const resultsDiv = document.getElementById('fillInResults');
-            resultsDiv.innerHTML = `
-                <h3>Results for this page: ${correct}/${total} correct (${Math.round(correct/total*100)}%)</h3>
-                <p>You can correct your answers and check again, or move to the next page.</p>
-            `;
-            resultsDiv.classList.add('show');
-
-            fillInChecked = true;
-            updateStats();
-            updateFillInPageControls();
-        }
-
-        function clearFillInAnswers() {
-            fillInAnswers = {};
-            fillInPageData.forEach((item, index) => {
-                const input = document.getElementById(`fill-in-input-${index}`);
-                const feedback = document.getElementById(`fill-in-feedback-${index}`);
-                const itemDiv = document.getElementById(`fill-in-item-${index}`);
-                
-                if (input) {
-                    input.value = '';
-                    input.classList.remove('correct', 'incorrect');
-                }
-                if (feedback) {
-                    feedback.style.display = 'none';
-                }
-                if (itemDiv) {
-                    itemDiv.classList.remove('correct', 'incorrect');
-                }
-            });
-            
-            document.getElementById('fillInResults').innerHTML = '';
-            document.getElementById('fillInResults').classList.remove('show');
-        }
-
-        function nextFillInPage() {
-            if (fillInCurrentPage < fillInTotalPages) {
-                fillInCurrentPage++;
-                fillInAnswers = {};
-                fillInChecked = false;
-                loadFillInPage();
-                updateFillInPageControls();
-            }
-        }
-
-        function updateFillInPageControls() {
-            const nextBtn = document.getElementById('nextFillInBtn');
-            nextBtn.disabled = !fillInChecked;
-            nextBtn.style.display = fillInCurrentPage < fillInTotalPages ? 'inline-block' : 'none';
         }
 
         function resetQuiz() {
             document.getElementById('quizArea').classList.remove('active');
-            document.getElementById('fillInArea').style.display = 'none';
             document.getElementById('quizSet').value = '';
-            
-            // Reset matching quiz
             currentQuizData = [];
             currentPageData = [];
             shuffledPageData = [];
@@ -905,24 +673,11 @@
             correctCount = 0;
             totalAttempts = 0;
             firstTryCorrect = new Set();
-            answerStates = {};
-            checkedAnswers = false;
-            currentDefinitionChoices = {};
-            
-            // Reset fill-in quiz
-            fillInQuizData = [];
-            fillInPageData = [];
-            fillInCurrentPage = 1;
-            fillInTotalPages = 1;
-            fillInAnswers = {};
-            fillInChecked = false;
-            fillInCorrectCount = 0;
-            fillInTotalAttempts = 0;
-            fillInFirstTryCorrect = new Set();
-            
+            answerStates = {}; // Reset answer states
+            checkedAnswers = false; // Reset checked state
+            currentDefinitionChoices = {}; // Reset definition choices
             updateStats();
             showInteractiveQuizControls(false);
-            showFillInControls(false);
             showQuizTypeControls(false);
         }
 
@@ -938,6 +693,7 @@
         function openPaperQuiz() {
             const quizSet = document.getElementById('quizSet').value;
             const rawTerms = quizSets[quizSet] || [];
+            // Convert to old format for paper quiz compatibility
             const terms = rawTerms.map(item => ({
                 term: item.term,
                 def: getRandomDefinition(item.defs)
