@@ -167,6 +167,28 @@
                 {term: "Disillusion", defs: ["To free or deprive of an idea or belief that proves false or in error; disenchant."]},
                 {term: "Distress", defs: ["Anxiety, discomfort, or suffering; worry."]},
                 {term: "Exuberant", defs: ["Lively and joyous; enthusiastic; high-spirited."]}
-            ]
+            ],
+	    "Genetics: The Science of Heredity":[
+		{term: "alleles", defs: ["different forms of a gene"]},
+		{term: "codominance", defs:["allele that is not dominant or recessive"]},
+		{term: "dominant allele", defs:["allele whose trait is always expressed when present"]},
+		{term: "fertilization", defs: ["process in which the egg and sperm cell join"]},
+		{term: "gene", defs: ["segment of DNA that codes for a specific trait"]},
+		{term: "genetics", defs:["scientific study of heredity"]},
+		{term: "genotype", defs:["organism's allele combination"]},
+		{term: "heredity", defs:["passing of traits from parents to offspring"]},
+		{term: "heterozygous", defs:["having two different alleles for a trait"]},
+		{term: "homozygous", defs:["having two identical alleles for a trait"]},
+		{term: "hybrid", defs:["organism that is heterozygous for a trait"]},
+		{term: "meiosis", defs:["reduction of a chromosome by half"]},
+		{term: "messenger RNA", defs:["RNA that copes a code of DNA"]},
+		{term: "phenotype", defs:["organism's physical appearance"]},
+		{term: "probability", defs:["likelihood that an event will occur"]},
+		{term: "Punnett square", defs:["chart showing the possible alleles from a genetic cross"]},
+		{term: "purebred", defs:["organism producing offspring with the same traits as the parent"]},
+		{term: "recessive allele", defs:["allele that is masked by a dominant allele"]},
+		{term: "trait", defs:["characteristic an organism passes on to its offspring"]},
+		{term: "transfer RNA", defs:["RNA that carries the amino acid to the ribosome"]}
+	    ]
         };
 
