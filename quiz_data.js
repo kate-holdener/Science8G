@@ -189,6 +189,33 @@
 		{term: "recessive allele", defs:["allele that is masked by a dominant allele"]},
 		{term: "trait", defs:["characteristic an organism passes on to its offspring"]},
 		{term: "transfer RNA", defs:["RNA that carries the amino acid to the ribosome"]}
-	    ]
+	    ],
+        "Cardiovascular System": [
+            {term: "Cardiovascular system", defs: ["The body system that consists of the heart, blood vessels, and blood"]},
+            {term: "Heart", defs: ["A hollow, muscular organ that pumps blood throughout the body"]},
+            {term: "Atrium", defs: ["Each of the two upper chambers of the heart that receives blood that comes in to the heart"]},
+            {term: "Ventricle", defs: ["Each of the two lower chambers of the heart that pumps blood out of the heart"]},
+            {term: "Valve", defs: ["A flap of tissue in the heart or a vein that prevents blood from flowing backward"]},
+            {term: "Pacemaker", defs: ["A group of cells located in the right atrium that sends out signals that makes the heart muscle contract and that regulates heart rate"]},
+            {term: "Artery", defs: ["A blood vessel that carries blood away from the heart"]},
+            {term: "Capillary", defs: ["A tiny blood vessel where substances are exchanged between the blood and the body cells"]},
+            {term: "Vein", defs: ["A blood vessel that carries blood back to the heart"]},
+            {term: "Aorta", defs: ["The largest artery in the body"]},
+            {term: "Coronary artery", defs: ["An artery that supplies blood to the heart itself"]},
+            {term: "Pulse", defs: ["The alternating expansion and relaxation of an artery wall as blood travels through an artery"]},
+            {term: "Diffusion", defs: ["The process by which molecules move from an area of higher concentration to an area of lower concentration"]},
+            {term: "Blood Pressure", defs: ["The pressure that is exerted by the blood against the wall of blood vessels"]},
+            {term: "Plasma", defs: ["The liquid part of blood"]},
+            {term: "Red blood cell", defs: ["A cell in the blood that takes up oxygen in the lungs and delivers it to cells elsewhere in the body"]},
+            {term: "Hemoglobin", defs: ["An iron-containing protein that binds chemically to oxygen molecules"]},
+            {term: "White blood cell", defs: ["A blood cell that fights disease"]},
+            {term: "Platelet", defs: ["A cell fragment that plays an important part in forming blood clots"]},
+            {term: "Lymphatic System", defs: ["A network of veinlike vessels that returns the fluid that leaks out of blood vessels to the bloodstream"]},
+            {term: "Lymph", defs: ["The fluid that the lymphatic system collects and returns to the bloodstream"]},
+            {term: "Lymph node", defs: ["A small knob of tissue in the lymphatic system that filters lymph, trapping bacteria and other microorganisms that cause disease"]},
+            {term: "Atherosclerosis", defs: ["A condition in which an artery wall thickens, as a result of the buildup of fatty materials"]},
+            {term: "Hypertension", defs: ["A disorder in which a person's blood pressure is constantly higher than normal"]},
+            {term: "Heart Attack", defs: ["A condition in which blood flow to part of the heart muscle is blocked causing heart cells to die"]}
+        ]
         };
 
