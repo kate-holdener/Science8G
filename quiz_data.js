@@ -216,6 +216,32 @@
             {term: "Atherosclerosis", defs: ["A condition in which an artery wall thickens, as a result of the buildup of fatty materials"]},
             {term: "Hypertension", defs: ["A disorder in which a person's blood pressure is constantly higher than normal"]},
             {term: "Heart Attack", defs: ["A condition in which blood flow to part of the heart muscle is blocked causing heart cells to die"]}
+        ],
+        "Respiration and Excretion": [
+            {term: "respiration", defs: ["the process in which oxygen and glucose undergo a complex series of chemical reactions inside cells"]},
+            {term: "cilia", defs: ["tiny hairlike extensions that move together in a sweeping motion"]},
+            {term: "pharynx", defs: ["the throat"]},
+            {term: "trachea", defs: ["the windpipe"]},
+            {term: "bronchi", defs: ["the passages that direct air into the lungs"]},
+            {term: "lungs", defs: ["the main organs of the respiratory system"]},
+            {term: "alveoli", defs: ["tiny sacs of lung tissue specialized for the movement of gases between air and blood"]},
+            {term: "diaphragm", defs: ["a large dome-shaped muscle that plays an important role in breathing"]},
+            {term: "larynx", defs: ["the voice box"]},
+            {term: "vocal cords", defs: ["folds of connective tissue that stretch across the opening of the larynx and produce a person's voice"]},
+            {term: "tar", defs: ["a dark, sticky substance that forms when tobacco burns"]},
+            {term: "carbon monoxide", defs: ["a colorless, odorless gas produced when substances, including tobacco, are burned"]},
+            {term: "nicotine", defs: ["a stimulant drug in tobacco that increases the activities of the nervous system, heart, and other organs"]},
+            {term: "addiction", defs: ["a physical dependence on a substance"]},
+            {term: "bronchitis", defs: ["an irritation of the breathing passages in which the small passages become narrower than normal and may be clogged with mucus"]},
+            {term: "emphysema", defs: ["a serious disease that destroys lung tissue and causes breathing difficulties"]},
+            {term: "excretion", defs: ["the process by which wastes are removed from the body"]},
+            {term: "urea", defs: ["a chemical that comes from the breakdown of proteins"]},
+            {term: "kidney", defs: ["a major organ of the excretory system which removes urea and other wastes from the blood"]},
+            {term: "urine", defs: ["a watery fluid produced by the kidneys that contains urea and other wastes"]},
+            {term: "ureter", defs: ["a narrow tube that carries urine from one of the kidneys to the urinary bladder"]},
+            {term: "urinary bladder", defs: ["a sacklike muscular organ that stores urine until it is eliminated from the body"]},
+            {term: "urethra", defs: ["a small tube through which urine flows from the body"]},
+            {term: "nephron", defs: ["small filtering structure found in the kidneys that removes wastes from blood and produces urine"]}
         ]
         };
 
