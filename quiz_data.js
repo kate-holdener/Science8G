@@ -242,6 +242,36 @@
             {term: "urinary bladder", defs: ["a sacklike muscular organ that stores urine until it is eliminated from the body"]},
             {term: "urethra", defs: ["a small tube through which urine flows from the body"]},
             {term: "nephron", defs: ["small filtering structure found in the kidneys that removes wastes from blood and produces urine"]}
+        ],
+        "Disease and the Immune System": [
+            {term: "pathogen", defs: ["an organism that causes disease"]},
+            {term: "infectious disease", defs: ["a disease caused by the presence of a living thing in the body"]},
+            {term: "toxin", defs: ["a poison produced by bacterial pathogens that damages cells"]},
+            {term: "inflammatory response", defs: ["part of the body's defence against pathogens, in which fluid and white blood cells leak from blood vessels into tissue and destroy pathogens by breaking them down"]},
+            {term: "phagocyte", defs: ["a white blood cell that destroys pathogens by engulfing them and breaking them down"]},
+            {term: "immune response", defs: ["part of the body's defence against pathogens in which cells of the immune system react to each kind of pathogen with a defence targeted specifically at the pathogen"]},
+            {term: "lymphocyte", defs: ["a white blood cell that distinguishes between each kind of pathogen"]},
+            {term: "t cell", defs: ["a lymphocyte that identifies pathogens and distinguishes one pathogen from another"]},
+            {term: "antigen", defs: ["a molecule that the immune system recognizes, either as part of the body or as coming from outside the body"]},
+            {term: "b cell", defs: ["a lymphocyte that produces proteins that help destroy pathogens"]},
+            {term: "antibody", defs: ["a protein produced by a b cell of the immune system that destroys pathogens"]},
+            {term: "AIDS", defs: ["a disease caused by a virus that attacks the immune system"]},
+            {term: "HIV", defs: ["the virus that causes AIDS"]},
+            {term: "immunity", defs: ["the body's ability to destroy pathogens before they can cause disease"]},
+            {term: "active immunity", defs: ["immunity that occurs when a person's own immune system produces antibodies in response to the presence of a pathogen"]},
+            {term: "vaccination", defs: ["the process by which harmless antigens are deliberately introduced into a person's body to produce active immunity"]},
+            {term: "vaccine", defs: ["a substance used in vaccination that consists of pathogens that have been weakened or killed but can still trigger the immune system into action"]},
+            {term: "antibiotic", defs: ["a chemical that kills bacteria or slows their growth without harming body cells"]},
+            {term: "passive immunity", defs: ["immunity in which antibodies are given to a person rather than produced within the person's own body"]},
+            {term: "noninfectious disease", defs: ["a disease that is not caused by a pathogen"]},
+            {term: "allergy", defs: ["a disorder in which the immune system is overly sensitive to a foreign substance"]},
+            {term: "allergen", defs: ["a substance that causes an allergy"]},
+            {term: "histamine", defs: ["a chemical that is responsible for the symptoms of an allergy"]},
+            {term: "asthma", defs: ["a disorder in which the respiratory passages narrow significantly"]},
+            {term: "insulin", defs: ["a chemical produced in the pancreas that enables the body's cells to take in glucose from the blood and use it for energy"]},
+            {term: "diabetes", defs: ["a condition in which the pancreas fails to produce enough insulin or the body's cells cannot use it properly"]},
+            {term: "tumor", defs: ["an abnormal tissue mass that results from the rapid division of cells"]},
+            {term: "carcinogen", defs: ["a substance or a factor in the environment that can cause cancer"]}
         ]
         };
 
