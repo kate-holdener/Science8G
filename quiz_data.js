@@ -312,7 +312,9 @@
             {term: "depressant", defs: ["a drug that slows down the activity of the central nervous system"]},
             {term: "stimulant", defs: ["a drug that speeds up body processes"]},
             {term: "anabolic steroid", defs: ["synthetic chemicals that are similar to hormones produced in the body"]},
-            {term: "alcoholism", defs: ["a disease in which a person is both physically addicted to and emotionally dependent on alcohol"]}
+            {term: "alcoholism", defs: ["a disease in which a person is both physically addicted to and emotionally dependent on alcohol"]},
+            {term: "nearsightedness", defs: ["a condition in which a person can see nearby objects clearly"]},
+            {term: "farsightedness", defs: ["a condition in which a person can see distnt objects clearly"]}
         ]
         };
 
